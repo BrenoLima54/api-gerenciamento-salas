@@ -1,24 +1,19 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const app = require('./app');
-const PORT = process.env.PORT || 5000;
+const app = require('../app');
 
-// Função assíncrona para iniciar o servidor e conectar ao MongoDB
-async function start() {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+let isConnected = false;
 
-    console.log('Conectado ao MongoDB.');
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log("Conectado ao MongoDB.");
+  isConnected = true;
+})
+.catch((err) => {
+  console.error("Erro ao conectar com o MongoDB:", err);
+});
 
-    app.listen(PORT, () => {
-      console.log(`Servidor rodando na porta ${PORT}`);
-    });
-  } catch (err) {
-    console.error('Erro ao conectar com o MongoDB:', err);
-  }
-}
-
-start();
+module.exports = app;
