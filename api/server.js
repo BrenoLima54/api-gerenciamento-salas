@@ -16,5 +16,4 @@ mongoose.connect(process.env.MONGO_URI, {
   console.error("Erro ao conectar com o MongoDB:", err);
 });
 
-if (isConnected)
-  module.exports = app;
+module.exports = app;
