@@ -10,7 +10,6 @@ exports.create = async (req, res) => {
   }
 
   try {
-    return res.status(418).json({ qualquer: process.env.MONGO_URI });
     const usuarioExistente = await User.findOne({ email })
     if (usuarioExistente) {
       return res.status(409).json({ erro: 'Usuário já existe' });
